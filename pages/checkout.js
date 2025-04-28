@@ -42,7 +42,7 @@ export default function CheckoutPage() {
   return (
     <Layout>
       {!productsInfos.length && (
-        <div>no products in your shopping cart</div>
+        <div>No tienes productos en tu carrito</div>
       )}
       {productsInfos.length && productsInfos.map(productInfo => {
         const amount = selectedProducts.filter(id => id === productInfo._id).length;
