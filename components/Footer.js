@@ -2,11 +2,21 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {useContext} from "react";
 import {ProductsContext} from "./ProductsContext";
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 export default function Footer() {
   const router = useRouter();
   const path = router.pathname;
   const {selectedProducts} = useContext(ProductsContext);
+
+  // ← IMPORTANTE: incluimos isLoading
+  const {
+    loginWithRedirect,
+    logout,
+    isAuthenticated,
+    isLoading,
+  } = useAuth0();
 
   return (
     <footer className="sticky bottom-0 bg-white p-5 w-full flex border-t border-gray-200 justify-center space-x-12 text-gray-400">
@@ -24,14 +34,33 @@ export default function Footer() {
         <span>Carrito {selectedProducts.length}</span>
       </Link>
 
-      <Link href={'/login'} className={(path === '/login' ? 'text-sky-500' : '')+" flex justify-center items-center flex-col"}>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-9A2.25 2.25 0 002.25 5.25v13.5A2.25 2.25 0 004.5 21h9a2.25 2.25 0 002.25-2.25V15M18 15l3-3m0 0l-3-3m3 3H9" />
-      </svg>
-
-        <span>Iniciar Sesion</span>
-      </Link>
-
+     {/* Botón de login/logout */}
+      {isLoading ? (
+        <div className="flex justify-center items-center flex-col">
+          <span>Cargando...</span>
+        </div>
+      ) : isAuthenticated ? (
+        <button
+          onClick={() => logout({ returnTo: window.location.origin })}
+          className="flex justify-center items-center flex-col"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M18 8.25v-1.5A2.25 2.25 0 0015.75 4.5h-9A2.25 2.25 0 004.5 6.75v10.5A2.25 2.25 0 006.75 19.5h9a2.25 2.25 0 002.25-2.25v-1.5" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 15l3-3m0 0l-3-3m3 3H9" />
+          </svg>
+          <span>Cerrar Sesión</span>
+        </button>
+      ) : (
+        <button
+          onClick={() => loginWithRedirect()}
+          className="flex justify-center items-center flex-col"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-9A2.25 2.25 0 002.25 5.25v13.5A2.25 2.25 0 004.5 21h9a2.25 2.25 0 002.25-2.25V15M18 15l3-3m0 0l-3-3m3 3H9" />
+          </svg>
+          <span>Iniciar Sesión</span>
+        </button>
+      )}
     </footer>
   );
 }
