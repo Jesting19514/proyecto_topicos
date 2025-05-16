@@ -34,9 +34,11 @@ export default function Footer() {
          href="/profile"
          className={`flex justify-center items-center flex-col ${path === '/profile' ? 'text-sky-500' : ''}`}
        >
-         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9A3.75 3.75 0 119.75 9m6 0A3.75 3.75 0 0115.75 9m-6 0v3.75m6-3.75v3.75m-6 3.75a6.75 6.75 0 0113.5 0v.75H3v-.75a6.75 6.75 0 0113.5 0z" />
-        </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 20.25a8.25 8.25 0 0115 0" />
+  </svg>
+
         <span>Perfil</span>
        </Link>
      )}
