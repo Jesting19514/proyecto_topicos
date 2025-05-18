@@ -50,17 +50,10 @@ export default function Footer() {
           <span>Cargando...</span>
         </div>
       ) : isAuthenticated ? (
-         <button
-      className="flex justify-center items-center flex-col"
-      onClick={() =>
-        logout({
-          // Nota la propiedad logoutParams
-          logoutParams: {
-            returnTo: window.location.origin,
-          },
-        })
-      }
-    >
+        <button
+          onClick={() => logout({ returnTo: "https://proyecto-topicos.onrender.com"})}
+          className="flex justify-center items-center flex-col"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M18 8.25v-1.5A2.25 2.25 0 0015.75 4.5h-9A2.25 2.25 0 004.5 6.75v10.5A2.25 2.25 0 006.75 19.5h9a2.25 2.25 0 002.25-2.25v-1.5" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 15l3-3m0 0l-3-3m3 3H9" />
