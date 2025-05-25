@@ -117,7 +117,13 @@ export default function CheckoutPage() {
         );
       })}
 
-      <form action="/api/checkout" method="POST">
+<form action="/api/checkout" method="POST" onSubmit={(e) => {
+  if (selectedProducts.length === 0) {
+    e.preventDefault();
+    alert('¡Tu carrito está vacío!');
+  }
+}}>
+
         <div className="mt-8 space-y-2">
           <input
             name="address"

@@ -13,6 +13,10 @@ export default async function handler(req,res) {
 
   const {email,name,address,city} = req.body;
   const productsIds = req.body.products.split(',').filter(id => id.trim() !== '');
+if (!productsIds.length) {
+  return res.status(400).json({ error: 'Tu carrito está vacío' });
+}
+
   const uniqIds = [...new Set(productsIds)];
   const products = await Product.find({ _id: { $in: uniqIds } }).exec();
   
