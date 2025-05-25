@@ -1,42 +1,62 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Product from "../components/Product";
-import {initMongoose} from "../lib/mongoose";
-import {findAllProducts} from "./api/products";
+import { initMongoose } from "../lib/mongoose";
+import { findAllProducts } from "./api/products";
 import Layout from "../components/Layout";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useRouter } from "next/router";
 
-export default function Home({products}) {
-  const [phrase,setPhrase] = useState('');
+export default function Home({ products }) {
+  const [phrase, setPhrase] = useState("");
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const router = useRouter();
 
-  const categoriesNames = [...new Set(products.map(p => p.categoria))];
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && user?.email === "jestgxq@gmail.com") {
+      router.push("/adminpanel");
+    }
+  }, [isAuthenticated, isLoading, user]);
 
+  const categoriesNames = [...new Set(products.map((p) => p.categoria))];
+
+  let filteredProducts = products;
   if (phrase) {
-    products = products.filter(p => p.nombre.toLowerCase().includes(phrase));
+    filteredProducts = products.filter((p) =>
+      p.nombre.toLowerCase().includes(phrase.toLowerCase())
+    );
   }
 
   return (
     <Layout>
-      <input value={phrase} onChange={e => setPhrase(e.target.value)} type="text" placeholder="Buscar productos" className="bg-gray-200 w-full py-2 px-4 rounded-xl"/>
+      <input
+        value={phrase}
+        onChange={(e) => setPhrase(e.target.value)}
+        type="text"
+        placeholder="Buscar productos"
+        className="bg-gray-200 w-full py-2 px-4 rounded-xl"
+      />
       <div>
-        {categoriesNames.map(categoryName => (
+        {categoriesNames.map((categoryName) => (
           <div key={categoryName}>
-            {products.find(p => p.categoria === categoryName) && (
+            {filteredProducts.find((p) => p.categoria === categoryName) && (
               <div>
                 <h2 className="text-2xl py-5 capitalize">{categoryName}</h2>
                 <div className="flex -mx-5 overflow-x-scroll snap-x scrollbar-hide">
-                  {products.filter(p => p.categoria === categoryName).map(productInfo => (
-                    <div key={productInfo._id} className="px-5 snap-start">
-                      <Product {...productInfo} />
-                    </div>
-                  ))}
+                  {filteredProducts
+                    .filter((p) => p.categoria === categoryName)
+                    .map((productInfo) => (
+                      <div key={productInfo._id} className="px-5 snap-start">
+                        <Product {...productInfo} />
+                      </div>
+                    ))}
                 </div>
               </div>
             )}
           </div>
         ))}
       </div>
-
     </Layout>
-  )
+  );
 }
 
 export async function getServerSideProps() {
