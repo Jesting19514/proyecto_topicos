@@ -3,6 +3,8 @@ import Layout from "../components/Layout";
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../components/ProductsContext";
 import { useAuth0 } from '@auth0/auth0-react';
+import toast from 'react-hot-toast';
+
 
 export default function CheckoutPage() {
   const { selectedProducts, setSelectedProducts } = useContext(ProductsContext);
@@ -120,9 +122,10 @@ export default function CheckoutPage() {
 <form action="/api/checkout" method="POST" onSubmit={(e) => {
   if (selectedProducts.length === 0) {
     e.preventDefault();
-    alert('¡Tu carrito está vacío!');
+    toast.error('¡Tu carrito está vacío!');
   }
 }}>
+
 
         <div className="mt-8 space-y-2">
           <input
