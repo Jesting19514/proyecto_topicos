@@ -11,11 +11,18 @@ export default function Home({ products }) {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isLoading && isAuthenticated && user?.email === "jestgxq@gmail.com") {
-      router.push("/adminpanel");
-    }
-  }, [isAuthenticated, isLoading, user]);
+  const adminEmails = ["jestgxq@gmail.com", "RubenOrtegaRdz@gmail.com"];
+
+useEffect(() => {
+  if (
+    !isLoading &&
+    isAuthenticated &&
+    adminEmails.includes(user?.email)
+  ) {
+    router.push("/adminpanel");
+  }
+}, [isAuthenticated, isLoading, user]);
+
 
   const categoriesNames = [...new Set(products.map((p) => p.categoria))];
 
