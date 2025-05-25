@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
       ) : isAuthenticated ? (
         <button
-          onClick={() => logout({ returnTo: "https://proyecto-topicos.onrender.com"})}
+          onClick={() => logout({ returnTo: window.location.origin })}
           className="flex justify-center items-center flex-col"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
