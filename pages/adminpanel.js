@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useRouter } from 'next/router';
+
 
 export default function AdminPanel() {
   const [products, setProducts] = useState([]);
@@ -10,6 +12,8 @@ export default function AdminPanel() {
   const [loading, setLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const { logout } = useAuth0();
+  const router = useRouter();
+
 
   useEffect(() => {
     fetchProducts();
@@ -101,18 +105,25 @@ export default function AdminPanel() {
     <div className="max-w-6xl mx-auto px-4 py-6">
   <h1 className="text-3xl font-bold text-gray-800 mb-6">Panel de Administración</h1>
 
-  <div className="mb-6">
-    <button
-      onClick={() => {
-        setIsAdding(true);
-        setEditing(null);
-        setForm({ nombre: '', descripcion: '', precio: '', categoria: '', foto: '' });
-      }}
-      className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg shadow"
-    >
-      + Agregar nuevo producto
-    </button>
-  </div>
+  <div className="mb-6 flex gap-4">
+  <button
+    onClick={() => {
+      setIsAdding(true);
+      setEditing(null);
+      setForm({ nombre: '', descripcion: '', precio: '', categoria: '', foto: '' });
+    }}
+    className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-lg shadow"
+  >
+    + Agregar nuevo producto
+  </button>
+  <button
+    onClick={() => router.push('/orders')}
+    className="bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg shadow"
+  >
+    Ver órdenes
+  </button>
+</div>
+
 
   {(editing || isAdding) && (
     <div className="bg-white shadow-md rounded-xl p-6 mb-8 border border-gray-200">
