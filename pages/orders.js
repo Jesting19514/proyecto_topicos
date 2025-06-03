@@ -38,11 +38,7 @@ export default function OrdersPage() {
             <div key={order._id} className="bg-white border rounded-xl p-6 shadow-sm">
               <div className="flex justify-between items-center mb-2">
                 <h2 className="text-lg font-semibold text-gray-700">Orden #{order._id.slice(-6)}</h2>
-                <span className={`text-sm font-bold px-3 py-1 rounded-full ${
-                  order.paid ? 'bg-emerald-100 text-emerald-600' : 'bg-red-100 text-red-600'
-                }`}>
-                  {order.paid ? 'Pagada' : 'No pagada'}
-                </span>
+             
               </div>
               <p><span className="font-medium">Nombre:</span> {order.name}</p>
               <p><span className="font-medium">Correo:</span> {order.email}</p>
