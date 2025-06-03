@@ -1,4 +1,4 @@
-// pages/adminpanel.js
+
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAuth0 } from '@auth0/auth0-react';

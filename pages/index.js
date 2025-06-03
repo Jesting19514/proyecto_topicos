@@ -11,7 +11,7 @@ export default function Home({ products }) {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const router = useRouter();
 
-  const adminEmails = ["jestgxq@gmail.com", "RubenOrtegaRdz@gmail.com"];
+  const adminEmails = ["jestgxq@gmail.com", "RubenOrtegaRdz@gmail.com","naruto19514@gmail.com"];
 
 useEffect(() => {
   if (

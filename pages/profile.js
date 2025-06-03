@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useAuth0 }          from '@auth0/auth0-react';
 import Layout from "../components/Layout";
+import toast from 'react-hot-toast';
+
 
 export default function Profile() {
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
@@ -55,76 +57,87 @@ export default function Profile() {
     });
     setSaving(false);
     if (res.ok) {
-      alert('Perfil guardado correctamente');
+      toast.success('Perfil guardado correctamente');
     } else {
-      alert('Error al guardar perfil');
+      toast.error('Error al guardar perfil');
     }
   };
+  
 
-  if (isLoading) return <p className="p-4">Cargando…</p>;
+  if (isLoading) return <p className="p-6 text-center text-gray-500">Cargando…</p>;
   if (!isAuthenticated) return null;
-
+  
   return (
-    <>
-    <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Tu Perfil</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Nombre */}
-        <div>
-          <label className="block text-gray-700">Nombre</label>
-          <input
-            name="name"
-            type="text"
-            value={form.name}
-            onChange={handleChange}
-            required
-            className="w-full border rounded p-2"
-          />
-        </div>
-        {/* Correo */}
-        <div>
-          <label className="block text-gray-700">Correo</label>
-          <input
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            className="w-full border rounded p-2"
-          />
-        </div>
-        {/* Dirección */}
-        <div>
-          <label className="block text-gray-700">Dirección</label>
-          <input
-            name="address"
-            type="text"
-            value={form.address}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-          />
-        </div>
-        {/* Código Postal */}
-        <div>
-          <label className="block text-gray-700">Código Postal</label>
-          <input
-            name="postalCode"
-            type="text"
-            value={form.postalCode}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={saving}
-          className="px-4 py-2 bg-sky-500 text-white rounded"
+    <Layout>
+      <div className="max-w-2xl mx-auto px-6 py-10">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Tu Perfil</h1>
+  
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-md border border-gray-200 rounded-xl p-6 space-y-6"
         >
-          {saving ? 'Guardando…' : 'Guardar Perfil'}
-        </button>
-      </form>
-    </div>
-     <Layout/>
-    </>
+          {/* Nombre */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Nombre</label>
+            <input
+              name="name"
+              type="text"
+              value={form.name}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-400"
+            />
+          </div>
+  
+          {/* Correo */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Correo electrónico</label>
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-400"
+            />
+          </div>
+  
+          {/* Dirección */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Dirección</label>
+            <input
+              name="address"
+              type="text"
+              value={form.address}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-400"
+            />
+          </div>
+  
+          {/* Código Postal */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">Código Postal</label>
+            <input
+              name="postalCode"
+              type="text"
+              value={form.postalCode}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-400"
+            />
+          </div>
+  
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={saving}
+              className="w-full bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md"
+            >
+              {saving ? 'Guardando…' : 'Guardar Cambios'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </Layout>
   );
+  
 }
