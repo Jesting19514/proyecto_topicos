@@ -29,40 +29,49 @@ useEffect(() => {
   let filteredProducts = products;
   if (phrase) {
     filteredProducts = products.filter((p) =>
-      p.nombre.toLowerCase().includes(phrase.toLowerCase())
+      p.nombre.toLowerCase().includes(phrase.toLowerCase()) ||
+      p.categoria.toLowerCase().includes(phrase.toLowerCase())
     );
   }
+  
 
   return (
     <Layout>
+  <div className="max-w-6xl mx-auto px-4 py-6">
+    <div className="mb-8">
       <input
         value={phrase}
         onChange={(e) => setPhrase(e.target.value)}
         type="text"
-        placeholder="Buscar productos"
-        className="bg-gray-200 w-full py-2 px-4 rounded-xl"
+        placeholder="🔍 Buscar productos..."
+        className="w-full bg-white border border-gray-300 rounded-full px-6 py-3 shadow focus:outline-none focus:ring-2 focus:ring-sky-400"
       />
-      <div>
-        {categoriesNames.map((categoryName) => (
-          <div key={categoryName}>
-            {filteredProducts.find((p) => p.categoria === categoryName) && (
-              <div>
-                <h2 className="text-2xl py-5 capitalize">{categoryName}</h2>
-                <div className="flex -mx-5 overflow-x-scroll snap-x scrollbar-hide">
-                  {filteredProducts
-                    .filter((p) => p.categoria === categoryName)
-                    .map((productInfo) => (
-                      <div key={productInfo._id} className="px-5 snap-start">
-                        <Product {...productInfo} />
-                      </div>
-                    ))}
+    </div>
+
+    <div className="space-y-12">
+      {categoriesNames.map((categoryName) => {
+        const productsInCategory = filteredProducts.filter(p => p.categoria === categoryName);
+        if (!productsInCategory.length) return null;
+
+        return (
+          <section key={categoryName}>
+            <h2 className="text-2xl md:text-3xl font-bold capitalize mb-4 text-sky-500">
+              {categoryName}
+            </h2>
+            <div className="flex gap-6 overflow-x-auto snap-x scrollbar-hide py-2 px-1">
+              {productsInCategory.map((productInfo) => (
+                <div key={productInfo._id} className="min-w-[240px] snap-start">
+                  <Product {...productInfo} />
                 </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </Layout>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</Layout>
+
   );
 }
 

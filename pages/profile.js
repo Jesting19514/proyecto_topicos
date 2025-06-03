@@ -1,4 +1,4 @@
-// pages/profile.js
+
 import { useEffect, useState } from 'react';
 import { useAuth0 }          from '@auth0/auth0-react';
 import Layout from "../components/Layout";
@@ -13,7 +13,8 @@ export default function Profile() {
     if (!isLoading && !isAuthenticated) {
       loginWithRedirect({ appState: { returnTo: '/profile' } });
     }
-  }, [isLoading, isAuthenticated]);
+  }, [isLoading, isAuthenticated, loginWithRedirect]);
+  
 
   // Al montar, carga datos actuales
   useEffect(() => {

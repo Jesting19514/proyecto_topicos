@@ -1,4 +1,4 @@
-// pages/checkout.js
+ 
 import Layout from "../components/Layout";
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../components/ProductsContext";

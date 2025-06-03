@@ -16,7 +16,6 @@ function MyApp({ Component, pageProps }) {
       cacheLocation="localstorage"
     >
       <ProductsContextProvider>
-        {/* Toaster debe estar aquí para que funcione en toda la app */}
         <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
         <Component {...pageProps} />
       </ProductsContextProvider>
