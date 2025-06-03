@@ -1,4 +1,4 @@
-import {model, models, Schema} from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 const OrderSchema = new Schema({
   products: Object,
@@ -6,8 +6,8 @@ const OrderSchema = new Schema({
   email: String,
   address: String,
   city: String,
-  paid: {type:Number,defaultValue:0},
-}, {timestamps: true});
+  paid: { type: Boolean, default: false },
+}, { timestamps: true });
 
 const Order = models?.Order || model('Order', OrderSchema);
 

@@ -3,10 +3,9 @@ import Order from "../../models/Order";
 import {buffer} from 'micro';
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// localhost:3000/api/webhook
 export default async function handler(req, res) {
   await initMongoose();
-  const signingSecret = 'whsec_634d3142fd2755bd61adaef74ce0504bd2044848c8aac301ffdb56339a0ca78d';
+  const signingSecret = process.env.STRIPE_WEBHOOK_SECRET;
   const payload = await buffer(req);
   const signature = req.headers['stripe-signature'];
   const event = stripe.webhooks.constructEvent(payload, signature, signingSecret);
